@@ -27,6 +27,7 @@ const CameraScreen: React.FC<{route: any}> = ({route}) => {
   const navigation = useNavigation();
 
   useEffect(() => {
+    requestStoragePermission();
     const openCamera = async () => {
       const isCameraAccessible = await checkAndOpenCamera();
       if (isCameraAccessible) {
@@ -41,7 +42,7 @@ const CameraScreen: React.FC<{route: any}> = ({route}) => {
   };
 
   const pickImageFromGallery = async () => {
-    requestStoragePermission();
+    
     launchImageLibrary(
       {
         mediaType: 'photo',
