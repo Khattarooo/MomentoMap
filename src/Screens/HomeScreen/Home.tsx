@@ -24,11 +24,16 @@ const Home: React.FC<Props> = ({navigation}) => {
   ];
 
   useEffect(() => {
-    requestLocationPermission();
-    getCurrentLocation();
+   const fetchLocation = async () => {
+      await new Promise(resolve => setTimeout(resolve, 1000)); 
+      await requestLocationPermission();
+      getCurrentLocation();
+    };
+
+    fetchLocation();
     const interval = setInterval(() => {
       setQuoteIndex(prevIndex => (prevIndex + 1) % quotes.length);
-    }, 6000);
+    }, 4000);
     return () => clearInterval(interval);
   }, [quotes.length]);
 
@@ -36,7 +41,7 @@ const Home: React.FC<Props> = ({navigation}) => {
     try {
       const location = await GetLocation.getCurrentPosition({
         enableHighAccuracy: true,
-        timeout: 60000,
+        timeout: 20000,
       });
       setUserLocation(location);
     } catch (error) {
